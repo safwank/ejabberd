@@ -57,7 +57,11 @@ defmodule Ejabberd.Mixfile do
   end
 
   defp deps_include(deps) do
-    Enum.map(deps, fn dep -> "deps/#{dep}/include" end) ++ Enum.map(deps, fn dep -> "../#{dep}/include" end)
+    if File.exists?("deps") do
+      Enum.map(deps, fn dep -> "deps/#{dep}/include" end)
+    else
+      Enum.map(deps, fn dep -> "../#{dep}/include" end)
+    end
   end
 
   defp cond_deps do
